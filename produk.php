@@ -6,21 +6,17 @@ class Produk
   public $penulis;
   public $penerbit;
   public $harga;
-  public $tipe;
-  public $halaman;
-  public $waktu;
+  public $jumlah;
 
-  public function __construct($a = "judul", $b = "penulis", $c = "penerbit", $d = 0, $e = "tipe", $f = 0, $g = 0)
+
+  public function __construct($a = "judul", $b = "penulis", $c = "penerbit", $d = 0, $e = 0)
   {
     $this->judul = $a;
     $this->penulis = $b;
     $this->penerbit = $c;
     $this->harga = $d;
-    $this->tipe = $e;
-    $this->halaman = $f;
-    $this->waktu = $g;
+    $this->jumlah = $e;
   }
-
 
 
   public function getLabel()
@@ -33,12 +29,26 @@ class Produk
   public function getInfoLengkap()
   {
     $str = "{$this->tipe} : {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
-    if ($this->tipe == 'Novel') {
-      $str .= " - {$this->halaman} halaman";
-    } else if ($this->tipe == 'Game') {
-      $str .= " ~ {$this->waktu} jam";
-    }
 
+    return $str;
+  }
+}
+
+
+class Novel extends Produk
+{
+  public function getInfoLengkap()
+  {
+    $str = "Novel : {$this->judul} | {$this->getLabel()} (Rp. {$this->harga}) {$this->jumlah} - halaman";
+    return $str;
+  }
+}
+
+class Game extends Produk
+{
+  public function getInfoLengkap()
+  {
+    $str = "Game : {$this->judul} | {$this->getlabel()} (Rp. {$this->harga}) {$this->jumlah} ~ jam";
     return $str;
   }
 }
@@ -55,8 +65,8 @@ class CetakInfoProduk
 }
 
 
-$produk1 = new Produk('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 150000, 'Novel', 100, null);
-$produk2 = new Produk('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000, 'Game', null, 50);
+$produk1 = new Novel('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 150000, 100);
+$produk2 = new Game('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000, 50);
 
 echo $produk1->getInfoLengkap();
 echo "<br>";
