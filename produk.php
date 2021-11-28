@@ -6,13 +6,19 @@ class Produk
   public $penulis;
   public $penerbit;
   public $harga;
+  public $tipe;
+  public $halaman;
+  public $waktu;
 
-  public function __construct($a = "judul", $b = "penulis", $c = "penerbit", $d = 0)
+  public function __construct($a = "judul", $b = "penulis", $c = "penerbit", $d = 0, $e = "tipe", $f = 0, $g = 0)
   {
     $this->judul = $a;
     $this->penulis = $b;
     $this->penerbit = $c;
     $this->harga = $d;
+    $this->tipe = $e;
+    $this->halaman = $f;
+    $this->waktu = $g;
   }
 
 
@@ -22,6 +28,18 @@ class Produk
     return "$this->penulis, $this->penerbit";
 
     //properti $this berfungsi untuk mengambil properti yang ada didalam kelas untuk yang bersangkutan
+  }
+
+  public function getInfoLengkap()
+  {
+    $str = "{$this->tipe} : {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+    if ($this->tipe == 'Novel') {
+      $str .= " - {$this->halaman} halaman";
+    } else if ($this->tipe == 'Game') {
+      $str .= " ~ {$this->waktu} jam";
+    }
+
+    return $str;
   }
 }
 
@@ -37,14 +55,9 @@ class CetakInfoProduk
 }
 
 
-$produk1 = new Produk('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 150000);
-$produk2 = new Produk('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000);
-$produk3 = new Produk('Dragonball');
+$produk1 = new Produk('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 150000, 'Novel', 100, null);
+$produk2 = new Produk('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000, 'Game', null, 50);
 
-
-echo "Novel : {$produk1->getLabel()}";
+echo $produk1->getInfoLengkap();
 echo "<br>";
-echo "Game : " . $produk2->getLabel();
-echo "<br>";
-$infoProduk = new CetakInfoProduk();
-echo $infoProduk->cetak($produk1);
+echo $produk2->getInfoLengkap();
