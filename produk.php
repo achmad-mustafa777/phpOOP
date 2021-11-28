@@ -26,13 +26,25 @@ class Produk
 }
 
 
+class CetakInfoProduk
+{
+  public function cetak(Produk $produk) //artinya fungsi cetak hanya mau menerima parameter dari kelas objek Produk
+  {
+    $str = "{$produk->judul} | {$produk->getLabel()} (Rp.{$produk->harga}) ";
+
+    return $str;
+  }
+}
+
+
 $produk1 = new Produk('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 150000);
 $produk2 = new Produk('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000);
 $produk3 = new Produk('Dragonball');
 
 
-echo "Novel : " . $produk1->getLabel();
+echo "Novel : {$produk1->getLabel()}";
 echo "<br>";
 echo "Game : " . $produk2->getLabel();
 echo "<br>";
-echo "Game Pasaran : " . $produk3->getLabel();
+$infoProduk = new CetakInfoProduk();
+echo $infoProduk->cetak($produk1);
