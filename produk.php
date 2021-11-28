@@ -2,10 +2,20 @@
 
 class Produk
 {
-  public $judul = "judul",
-    $penulis = "penulis",
-    $penerbit = "penerbit",
-    $harga = 0;
+  public $judul;
+  public $penulis;
+  public $penerbit;
+  public $harga;
+
+  public function __construct($a = "judul", $b = "penulis", $c = "penerbit", $d = 0)
+  {
+    $this->judul = $a;
+    $this->penulis = $b;
+    $this->penerbit = $c;
+    $this->harga = $d;
+  }
+
+
 
   public function getLabel()
   {
@@ -15,27 +25,14 @@ class Produk
   }
 }
 
-// $produk1 = new Produk();
-// $produk1->judul = "Secret of Heacker";
-// var_dump($produk1);
 
-// $produk2 = new Produk();
-// $produk2->judul = "Musasi Samuarai Gaiden";
-// $produk2->propertiBaru = "makanya gunakan access privat";
-// var_dump($produk2);
+$produk1 = new Produk('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 150000);
+$produk2 = new Produk('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000);
+$produk3 = new Produk('Dragonball');
 
-$produk3 = new Produk();
-$produk3->judul = "Screat of Heacker";
-$produk3->penulis = "Achmad";
-$produk3->penerbit = "Pustaka Logika";
-$produk3->harga = 150000;
 
-$produk4 = new Produk();
-$produk4->judul = "Detectife Hentai";
-$produk4->penulis = "Simotho Konoha";
-$produk4->penerbit = "Shonen Hentai";
-$produk4->harga = 20000;
-
-echo "Novel : " . $produk3->getLabel();
+echo "Novel : " . $produk1->getLabel();
 echo "<br>";
-echo "Game : " . $produk4->getLabel();
+echo "Game : " . $produk2->getLabel();
+echo "<br>";
+echo "Game Pasaran : " . $produk3->getLabel();
