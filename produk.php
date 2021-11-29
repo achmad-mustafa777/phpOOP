@@ -5,7 +5,8 @@ class Produk
   public $judul;
   public $penulis;
   public $penerbit;
-  public $harga;
+  protected $diskon;
+  private $harga;
 
 
 
@@ -17,6 +18,12 @@ class Produk
     $this->harga = $harga;
   }
 
+
+  protected function getHarga()
+  {
+
+    return $this->harga - ($this->harga * $this->diskon / 100);
+  }
 
   public function getLabel()
   {
@@ -33,14 +40,14 @@ class Produk
   }
 }
 
-
+//Novel
 class Novel extends Produk
 {
   public $halaman;
 
   public function __construct($judul, $penulis, $penerbit, $harga, $halaman)
   {
-    parent::__construct($judul, $penerbit, $penulis, $harga);
+    parent::__construct($judul, $penerbit, $penulis, $harga = 600000);
     $this->halaman = $halaman;
   }
 
@@ -49,8 +56,19 @@ class Novel extends Produk
     $str = "Novel :" . parent::getInfoLengkap() . " - {$this->halaman} halaman";
     return $str;
   }
+
+  public function setDiskon($diskon)
+  {
+    $this->diskon = $diskon;
+  }
+
+  public function getHarga()
+  {
+    return parent::getHarga();
+  }
 }
 
+//Gameing
 class Game extends Produk
 {
   public $waktuMain;
@@ -81,9 +99,13 @@ class CetakInfoProduk
 }
 
 
-$produk1 = new Novel('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 150000, 100);
+$produk1 = new Novel('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 0, 100);
 $produk2 = new Game('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000, 50);
 
 echo $produk1->getInfoLengkap();
 echo "<br>";
 echo $produk2->getInfoLengkap();
+echo "<hr>";
+
+$produk1->setDiskon(0);
+echo "Harga setelah diskonnya adalah {$produk1->getHarga()}";
