@@ -6,16 +6,15 @@ class Produk
   public $penulis;
   public $penerbit;
   public $harga;
-  public $jumlah;
 
 
-  public function __construct($a = "judul", $b = "penulis", $c = "penerbit", $d = 0, $e = 0)
+
+  public function __construct($judul = "judul", $penulis = "penulis", $penerbit = "penerbit", $harga = 0)
   {
-    $this->judul = $a;
-    $this->penulis = $b;
-    $this->penerbit = $c;
-    $this->harga = $d;
-    $this->jumlah = $e;
+    $this->judul = $judul;
+    $this->penulis = $penulis;
+    $this->penerbit = $penerbit;
+    $this->harga = $harga;
   }
 
 
@@ -28,7 +27,7 @@ class Produk
 
   public function getInfoLengkap()
   {
-    $str = "{$this->tipe} : {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+    $str = " {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
 
     return $str;
   }
@@ -37,18 +36,35 @@ class Produk
 
 class Novel extends Produk
 {
+  public $halaman;
+
+  public function __construct($judul, $penulis, $penerbit, $harga, $halaman)
+  {
+    parent::__construct($judul, $penerbit, $penulis, $harga);
+    $this->halaman = $halaman;
+  }
+
   public function getInfoLengkap()
   {
-    $str = "Novel : {$this->judul} | {$this->getLabel()} (Rp. {$this->harga}) {$this->jumlah} - halaman";
+    $str = "Novel :" . parent::getInfoLengkap() . " - {$this->halaman} halaman";
     return $str;
   }
 }
 
 class Game extends Produk
 {
+  public $waktuMain;
+
+  public function __construct($judul, $penerbit, $penulis, $harga, $waktuMain)
+  {
+
+    parent::__construct($judul, $penerbit, $penulis, $harga);
+    $this->waktuMain = $waktuMain;
+  }
+
   public function getInfoLengkap()
   {
-    $str = "Game : {$this->judul} | {$this->getlabel()} (Rp. {$this->harga}) {$this->jumlah} ~ jam";
+    $str = "Game : " . parent::getInfoLengkap() . " ~ {$this->waktuMain} jam";
     return $str;
   }
 }
