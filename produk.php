@@ -2,10 +2,10 @@
 
 class Produk
 {
-  public $judul;
-  public $penulis;
-  public $penerbit;
-  protected $diskon;
+  private $judul;
+  private $penulis;
+  private $penerbit;
+  private $diskon;
   private $harga;
 
 
@@ -18,6 +18,11 @@ class Produk
     $this->harga = $harga;
   }
 
+
+  public function setHarga($harga)
+  {
+    $this->harga = $harga;
+  }
 
   protected function getHarga()
   {
@@ -38,16 +43,52 @@ class Produk
 
     return $str;
   }
+
+
+  public function setJudul($judul)
+  {
+    $this->judul = $judul;
+  }
+
+  public function getJudul()
+  {
+    return $this->judul;
+  }
+
+  public function setPenerbit($penerbit)
+  {
+    $this->penerbit = $penerbit;
+  }
+
+  public function getPenerbit()
+  {
+    return $this->penerbit;
+  }
+
+  public function setPenulis($penulis)
+  {
+    $this->penulis = $penulis;
+  }
+
+  public function getPenulis()
+  {
+    return $this->penulis;
+  }
+
+  public function setDiskon($diskon)
+  {
+    $this->diskon = $diskon;
+  }
 }
 
 //Novel
 class Novel extends Produk
 {
-  public $halaman;
+  private $halaman;
 
   public function __construct($judul, $penulis, $penerbit, $harga, $halaman)
   {
-    parent::__construct($judul, $penerbit, $penulis, $harga = 600000);
+    parent::__construct($judul, $penerbit, $penulis, $harga);
     $this->halaman = $halaman;
   }
 
@@ -57,16 +98,12 @@ class Novel extends Produk
     return $str;
   }
 
-  public function setDiskon($diskon)
-  {
-    $this->diskon = $diskon;
-  }
-
   public function getHarga()
   {
     return parent::getHarga();
   }
 }
+
 
 //Gameing
 class Game extends Produk
@@ -99,13 +136,20 @@ class CetakInfoProduk
 }
 
 
-$produk1 = new Novel('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 0, 100);
+$produk1 = new Novel('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 600000, 100);
 $produk2 = new Game('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000, 50);
+$produk3 = new Novel('The Hacker', 'mustafa', 'Pustaka Logika', 300000, 110);
 
 echo $produk1->getInfoLengkap();
 echo "<br>";
 echo $produk2->getInfoLengkap();
+echo "<br>";
+echo $produk3->getInfoLengkap();
 echo "<hr>";
 
-$produk1->setDiskon(0);
-echo "Harga setelah diskonnya adalah {$produk1->getHarga()}";
+$produk3->setHarga(400000);
+$produk3->setJudul('The Black Phantom Humble');
+echo "Harga buku  sebelum diskon dengan judul {$produk3->getJudul()} (Rp. {$produk3->getHarga()})";
+echo "<br>";
+$produk3->setDiskon(20);
+echo "Harga buku {$produk3->getJudul()} setelah diskon 20% (Rp. {$produk3->getHarga()})";
