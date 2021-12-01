@@ -1,12 +1,19 @@
 <?php
 
+interface infoProduk
+{
+  public function getInfoLengkap();
+}
+
+
+
 abstract class Produk
 {
-  private $judul;
-  private $penulis;
-  private $penerbit;
-  private $diskon;
-  private $harga;
+  protected $judul;
+  protected $penulis;
+  protected $penerbit;
+  protected $diskon;
+  protected $harga;
 
 
 
@@ -70,19 +77,13 @@ abstract class Produk
     $this->diskon = $diskon;
   }
 
-  abstract public function getInfoLengkap();
 
-  public function getInfo()
-  {
-    $str = " {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
-
-    return $str;
-  }
+  abstract public function getInfo();
 }
 
 
 // ! Novel
-class Novel extends Produk
+class Novel extends Produk implements infoProduk
 {
   private $halaman;
 
@@ -90,6 +91,13 @@ class Novel extends Produk
   {
     parent::__construct($judul, $penerbit, $penulis, $harga);
     $this->halaman = $halaman;
+  }
+
+  public function getInfo()
+  {
+    $str = " {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+
+    return $str;
   }
 
   public function getInfoLengkap()
@@ -115,6 +123,13 @@ class Game extends Produk
 
     parent::__construct($judul, $penerbit, $penulis, $harga);
     $this->waktuMain = $waktuMain;
+  }
+
+  public function getInfo()
+  {
+    $str = " {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+
+    return $str;
   }
 
   public function getInfoLengkap()
@@ -159,17 +174,13 @@ echo $cetakProduk->cetak();
 
 
 /*
-! BAB  Abstraksi
-todo: Membuat class CetakInfoProduk untuk mencetak /menampilkan banyak produk segaligus sebelum masuk ke kelas abstrak
-? Didalam class CetakInfoProduk :
-  * 1.membuat sebuah properti berupa array kosong yang akan menyimpan objek kelas produk yang akan dicetak langsung
-  * 2.membuat sebuah method yang berfungsi untuk menambah/mengisi pada properti array yang akan dicetak produknya
-  * 3.membuat sebuah method yang berfungsi mencetak / membangun string yang ada pada array kosong dengan menggunakan -
-  *   looping foreach
+! Syarat  Interface
+* Tidak boleh memiliki properti cuman method yang dimiliki
+* visibility method harus berupa public
+* murni untuk kelas turunannya sebagai template
+* boleh mendeklarasikan __construck
+* boleh mengimpelntasikan satu class untuk banyak interface
 
-
-! Masuk ke Class Abstrak
-todo: menambahkan keyword abstrak pada class Produk 
-todo: menambahkan keyword abstrak pada method getInfoLengkap() pada class Produk 
-
+todo: buat kelas interface infoProduk dengan method getInfoLengkap()
+todo: implementasiakn class interface ke kelas turunannya
 */
