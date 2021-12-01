@@ -1,6 +1,6 @@
 <?php
 
-class Produk
+abstract class Produk
 {
   private $judul;
   private $penulis;
@@ -33,17 +33,7 @@ class Produk
   public function getLabel()
   {
     return "$this->penulis, $this->penerbit";
-
-    //properti $this berfungsi untuk mengambil properti yang ada didalam kelas untuk yang bersangkutan
   }
-
-  public function getInfoLengkap()
-  {
-    $str = " {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
-
-    return $str;
-  }
-
 
   public function setJudul($judul)
   {
@@ -79,9 +69,19 @@ class Produk
   {
     $this->diskon = $diskon;
   }
+
+  abstract public function getInfoLengkap();
+
+  public function getInfo()
+  {
+    $str = " {$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+
+    return $str;
+  }
 }
 
-//Novel
+
+// ! Novel
 class Novel extends Produk
 {
   private $halaman;
@@ -94,7 +94,7 @@ class Novel extends Produk
 
   public function getInfoLengkap()
   {
-    $str = "Novel :" . parent::getInfoLengkap() . " - {$this->halaman} halaman";
+    $str = "Novel :" . $this->getInfo() . " - {$this->halaman} halaman";
     return $str;
   }
 
@@ -105,7 +105,7 @@ class Novel extends Produk
 }
 
 
-//Gameing
+//! Gameing
 class Game extends Produk
 {
   public $waktuMain;
@@ -119,7 +119,7 @@ class Game extends Produk
 
   public function getInfoLengkap()
   {
-    $str = "Game : " . parent::getInfoLengkap() . " ~ {$this->waktuMain} jam";
+    $str = "Game : " . $this->getInfo() . " ~ {$this->waktuMain} jam";
     return $str;
   }
 }
@@ -127,9 +127,20 @@ class Game extends Produk
 
 class CetakInfoProduk
 {
-  public function cetak(Produk $produk) //artinya fungsi cetak hanya mau menerima parameter dari kelas objek Produk
+  public $daftarProduk = [];
+
+  public function tambahProduk(Produk $produk)
   {
-    $str = "{$produk->judul} | {$produk->getLabel()} (Rp.{$produk->harga}) ";
+    $this->daftarProduk[] = $produk;
+  }
+
+  public function cetak()
+  {
+    $str = "Daftar Produk: <br>";
+
+    foreach ($this->daftarProduk as $p) {
+      $str .= "- {$p->getInfoLengkap()} <br>";
+    }
 
     return $str;
   }
@@ -138,18 +149,27 @@ class CetakInfoProduk
 
 $produk1 = new Novel('The Screat of Heacker', 'Achmad', 'Pustaka Logika', 600000, 100);
 $produk2 = new Game('Detectiv Hentai', 'Sugiono', 'Shonan Hentai', 20000, 50);
-$produk3 = new Novel('The Hacker', 'mustafa', 'Pustaka Logika', 300000, 110);
 
-echo $produk1->getInfoLengkap();
-echo "<br>";
-echo $produk2->getInfoLengkap();
-echo "<br>";
-echo $produk3->getInfoLengkap();
-echo "<hr>";
+$cetakProduk = new CetakInfoProduk();
+$cetakProduk->tambahProduk($produk1);
+$cetakProduk->tambahProduk($produk2);
 
-$produk3->setHarga(400000);
-$produk3->setJudul('The Black Phantom Humble');
-echo "Harga buku  sebelum diskon dengan judul {$produk3->getJudul()} (Rp. {$produk3->getHarga()})";
-echo "<br>";
-$produk3->setDiskon(20);
-echo "Harga buku {$produk3->getJudul()} setelah diskon 20% (Rp. {$produk3->getHarga()})";
+echo $cetakProduk->cetak();
+
+
+
+/*
+! BAB  Abstraksi
+todo: Membuat class CetakInfoProduk untuk mencetak /menampilkan banyak produk segaligus sebelum masuk ke kelas abstrak
+? Didalam class CetakInfoProduk :
+  * 1.membuat sebuah properti berupa array kosong yang akan menyimpan objek kelas produk yang akan dicetak langsung
+  * 2.membuat sebuah method yang berfungsi untuk menambah/mengisi pada properti array yang akan dicetak produknya
+  * 3.membuat sebuah method yang berfungsi mencetak / membangun string yang ada pada array kosong dengan menggunakan -
+  *   looping foreach
+
+
+! Masuk ke Class Abstrak
+todo: menambahkan keyword abstrak pada class Produk 
+todo: menambahkan keyword abstrak pada method getInfoLengkap() pada class Produk 
+
+*/
