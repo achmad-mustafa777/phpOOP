@@ -1,11 +1,5 @@
 <?php
 
-interface infoProduk
-{
-  public function getInfoLengkap();
-}
-
-
 
 abstract class Produk
 {
