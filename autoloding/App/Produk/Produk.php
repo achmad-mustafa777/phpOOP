@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Produk;
+
 abstract class Produk
 {
   protected $judul;

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Produk;
+
 class Novel extends Produk implements infoProduk
 {
   private $halaman;

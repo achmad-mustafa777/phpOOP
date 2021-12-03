@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Produk;
+
 class CetakInfoProduk
 {
   public $daftarProduk = [];
